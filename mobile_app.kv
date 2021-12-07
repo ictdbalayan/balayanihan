@@ -1,0 +1,614 @@
+WindowManager:
+    MainWindow:
+    MenuWindow:
+    UserWindow:
+    SignupWindow:
+
+#################################################### HOME PAGE #####################################################
+
+<MainWindow>:
+    name: "home"
+
+    FloatLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        pos_hint : {"center_x":.5,"center_y":.5}
+        canvas.before:
+            Rectangle:
+                source: 'bg1.png'
+                pos: self.pos
+                size: 320, 680
+        padding : 30
+        spacing : 30
+        orientation : "vertical"
+
+        Image:
+            source: 'bgc2.png'
+            size: 290,250
+            pos: 15, 490
+            texture: self.texture
+            size_hint: (None, None)
+
+        Image:
+            source: 'newlogo.png'
+            size: 180,180
+            pos: 70, 360
+            texture: self.texture
+            size_hint: (None, None)
+
+        Label:
+            markup: True
+            text : "[b]BALAYANIHAN[/b]"
+            color: (1,1,1,1)
+            font_style : 'Button'
+            font_size : 35
+            size_hint_y : None
+            pos: -4, 290
+
+        TextInput:
+            id: login
+            icon_right: "account"
+            hint_text : "username"
+            size_hint: (.5, .04)
+            height: 10
+            font_size : 14
+            pos: 80, 280
+            color_active : [0,0.5,0.5,1]
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        Image:
+            source: 'login.png'
+            size: 15, 15
+            pos: 218, 286
+            texture: self.texture
+            size_hint: (None, None)
+
+        TextInput:
+            id: passw
+            hint_text : "password"
+            icon_right : "eye-off"
+            size_hint: (.5, .04)
+            font_size : 14
+            pos: 80, 240
+            color_active : [0,0.5,0.5,1]
+            password : False
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        Image:
+            source: 'key.png'
+            size: 15, 15
+            pos: 218, 246
+            texture: self.texture
+            size_hint: (None, None)
+
+        Label:
+            id: err_lbl
+            size_hint: (.5, .04)
+            font_size : 12
+            pos: 80, 210
+            color_active : [0,0.5,0.5,1]
+
+        Button:
+            text: "Login"
+            font_size: 12
+            pos: 130, 170
+            background_color: (0.5,0.5,1,1)
+            size_hint: (.2, .05)
+            on_release:
+                root.verify_credentials()
+                root.manager.transition.direction = "left"
+
+        RoundedButton:
+            text: "Menu"
+            font_size: 12
+            pos: 130, 130
+            size_hint: (.2, .05)
+            on_release:
+                app.root.current = "menu"
+                root.manager.transition.direction = "left"
+
+        Label:
+            text: "Don't have an account?"
+            size_hint: (.5, .04)
+            font_size : 11
+            pos: 168, 550
+            color: (1,1,1,1)
+
+        Button:
+            markup: True
+            text: "[b][u]Sign-up[/u][/b]"
+            font_size: 12
+            color: (1,1,1,1)
+            background_color: (0,0,0,0)
+            pos: 245, 530
+            size_hint: (.2, .05)
+            on_release:
+                app.root.current = "sign_up"
+                root.manager.transition.direction = "left"
+
+        Image:
+            source: 'wc.png'
+            size: 250, 250
+            pos: 35, -75
+            texture: self.texture
+            size_hint: (None, None)
+
+############################################# (Design Button: Round) ###############################################
+
+<RoundedButton@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (48/255,84/255,150/255,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [10]
+
+<RoundedButton2@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    color: 1,1,1,1
+    canvas.before:
+        Color:
+            rgba: (64/255,0/255,255/255,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [10]
+
+#################################################### MENU PAGE #####################################################
+
+<MenuWindow>:
+    name: "menu"
+
+    FloatLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        pos_hint : {"center_x":.5,"center_y":.5}
+        canvas.before:
+            Rectangle:
+                source: 'bg1.png'
+                pos: self.pos
+                size: 320, 680
+        padding : 30
+        spacing : 30
+        orientation : "vertical"
+
+        Image:
+            source: 'bgc.png'
+            size: 220,100
+            pos: 85, 565
+            texture: self.texture
+            size_hint: (None, None)
+
+        Image:
+            source: 'newlogo.png'
+            size: 90,90
+            pos: 15, 570
+            texture: self.texture
+            size_hint: (None, None)
+
+        Label:
+            markup: True
+            text : "[b]BALAYANIHAN[/b]"
+            color: (1,1,1,1)
+            font_style : 'Button'
+            font_size : 35
+            size_hint_y : None
+            pos: 4, 500
+
+        Label:
+            id: user_nickname
+            size_hint: (.7, .04)
+            font_size : 15
+            pos: -65, 480
+            color_active : [0,0.5,0.5,1]
+
+        Button:
+            text: "Information"
+            font_size: 12
+            pos: 15, 448
+            size_hint: (.25, .05)
+            on_release:
+                root.show_info()
+                root.manager.transition.direction = "left"
+
+        RoundedButton:
+            text: "Logout"
+            font_size: 12
+            pos: 240, 10
+            size_hint: (.2, .05)
+            on_release:
+                root.logout()
+                root.manager.transition.direction = "right"
+
+################################################### INFORMATION PAGE ###################################################
+
+<UserWindow>:
+    name: "info_page"
+
+    FloatLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        pos_hint : {"center_x":.5,"center_y":.5}
+        canvas.before:
+            Rectangle:
+                source: 'profile_bg.png'
+                pos: self.pos
+                size: 320, 680
+        padding : 30
+        spacing : 30
+        orientation : "vertical"
+
+        Image:
+            source: 'bgc.png'
+            size: 220,100
+            pos: 80, 565
+            texture: self.texture
+            size_hint: (None, None)
+
+        Image:
+            source: 'newlogo.png'
+            size: 90,90
+            pos: 15, 570
+            texture: self.texture
+            size_hint: (None, None)
+
+        Button:
+            markup: True
+            text: "[b]Edit[/b]"
+            font_size: 15
+            color: (1,1,1,1)
+            background_color: (0,0,0,0)
+            pos: 254, 500
+            size_hint: (.2, .05)
+            on_release:
+                app.root.current = "home"
+                root.manager.transition.direction = "right"
+
+        Label:
+            markup: True
+            text: "[b]Profile[/b]"
+            font_size: 20
+            size_hint_y : None
+            pos: -110, 475
+            color: (1,1,1,1)
+
+        TextInput:
+            id: info_a
+            hint_text: "Username"
+            size_hint: (.54, .04)
+            font_size : 10
+            pos: 130, 475
+            valign: 'top'
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_c
+            hint_text: "Surname"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 390
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_d
+            hint_text: "Given Name"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 357
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_e
+            hint_text: "Middle Name"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 324
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_f
+            hint_text: "Nickname"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 291
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_g
+            hint_text: "Gender"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 258
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_h
+            hint_text: "Birthdate"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 225
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_i
+            hint_text: "Contact Number"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 192
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_j
+            hint_text: "E-mail Address"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 159
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_k
+            hint_text: "Barangay"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 126
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: info_l
+            hint_text: "Complete Address"
+            size_hint: (.88, .04)
+            font_size : 10
+            pos: 20, 93
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        RoundedButton:
+            text: "Back"
+            font_size: 12
+            pos: 240, 10
+            size_hint: (.2, .05)
+            on_release:
+                app.root.current = "menu"
+                root.manager.transition.direction = "right"
+
+################################################### SIGN UP PAGE ###################################################
+
+<SignupWindow>:
+    name: "sign_up"
+
+    FloatLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        pos_hint : {"center_x":.5,"center_y":.5}
+        canvas.before:
+            Rectangle:
+                source: 'bg1.png'
+                pos: self.pos
+                size: 320, 680
+        padding : 30
+        spacing : 30
+        orientation : "vertical"
+
+        Image:
+            source: 'bgc.png'
+            size: 220,100
+            pos: 80, 565
+            texture: self.texture
+            size_hint: (None, None)
+
+        Image:
+            source: 'newlogo.png'
+            size: 90,90
+            pos: 15, 570
+            texture: self.texture
+            size_hint: (None, None)
+
+        Label:
+            markup: True
+            text: "[b]Profile[/b]"
+            font_size: 20
+            size_hint_y : None
+            pos: -110, 475
+            color: (1,1,1,1)
+
+        TextInput:
+            id: sut1
+            hint_text: "Username"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 475
+            valign: 'top'
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut2
+            hint_text: "Password"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 442
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut3
+            hint_text: "Last Name"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 409
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut4
+            hint_text: "Given Name"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 376
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut5
+            hint_text: "Middle Name"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 343
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut6
+            hint_text: "Nickname"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 310
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut7
+            hint_text: "Gender"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 277
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        Label:
+            markup: True
+            id: sut8_lbl
+            text_hint: "Birthday (yyyy/mm/dd)"
+            font_size: 12
+            pos: 50, -90
+            size_hint: (.85, .04)
+
+        Button:
+            markup: True
+            font_size: 15
+            color: (1,1,1,1)
+            background_color: (0,0,0,0)
+            pos: 254, 500
+            size_hint: (.2, .05)
+
+        Button:
+            id: sut8_button
+            color: (1,1,1,0.05)
+            font_size: 12
+            pos: 273, 243
+            size_hint: (.09, .04)
+
+        Image:
+            source: 'calendar.png'
+            size: 30, 30
+            pos: 272, 242
+            texture: self.texture
+            size_hint: (None, None)
+
+        TextInput:
+            id: sut8
+            hint_text: "Birthday"
+            size_hint: (.75, .04)
+            font_size : 12
+            pos: 30, 244
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut9
+            hint_text: "Contact Number"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 211
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut10
+            hint_text: "E-mail Address"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 178
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut11
+            hint_text: "Barangay"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 145
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        TextInput:
+            id: sut12
+            hint_text: "Complete Address"
+            size_hint: (.85, .04)
+            font_size : 12
+            pos: 30, 112
+            multiline:False
+            write_tab: False
+            on_text_validate: root.foo()
+
+        RoundedButton:
+            text: "Save"
+            font_size: 12
+            pos: 240, 50
+            size_hint: (.2, .05)
+            on_press:
+                root.save_signup()
+
+        RoundedButton:
+            text: "Back"
+            font_size: 12
+            pos: 240, 10
+            size_hint: (.2, .05)
+            on_release:
+                app.root.current = "home"
+                root.manager.transition.direction = "right"
+
